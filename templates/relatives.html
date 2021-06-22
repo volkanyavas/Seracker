@@ -1,0 +1,830 @@
+{% extends "layout.html" %}
+
+<style>
+
+    {% block css %}
+
+    .icerik{
+
+        height: 500px;
+        padding: 20px;
+        
+    }
+
+    .self-notify{
+
+      opacity: 0.8;
+    }
+
+    .self-div1{
+
+      padding: 15px;
+      border-radius: 10px;
+      opacity: 0.9;
+
+
+      -webkit-filter: blur(5px);
+      -moz-filter: blur(5px);
+      -o-filter: blur(5px);
+      -ms-filter: blur(5px);
+      filter: blur(0px);
+
+      background-color: #fff;
+
+     
+     
+      
+      
+    }
+
+    .self-div1:hover {
+
+      opacity: 1;
+
+      -webkit-filter: blur(5px);
+      -moz-filter: blur(5px);
+      -o-filter: blur(5px);
+      -ms-filter: blur(5px);
+      filter: blur(0px);
+
+      background-color: #fff;
+
+      
+      
+      
+      
+    }
+
+    .deneme{
+
+      initial-value: "asdas";
+    }
+    
+    
+
+
+    
+    {% endblock css %}
+
+</style>
+
+
+
+
+
+{% block body %}
+
+
+{% if onaylanan_takipler != 0 %}
+
+  {% for i in onaylanan_takipler["aile"]%}
+              
+  
+  <div class="modal" id="{{i.id}}tahlil">
+
+    <div class="modal-dialog modal-lg modal-lg">
+  
+      <div class="modal-content p-3">
+  
+        <div class="modal-header">
+          <h4>{{userInfo(i.id).to_dict()["name"] + " "+ userInfo(i.id).to_dict()["surname"]}} Adlı Kullanıcının Tahlil Sonuçları:</h4>
+          <button type="button" class="close" data-dismiss="modal" >&times;</button>
+        </div>
+        <div class="modal-body">
+
+          
+
+          {% if kayitliTahliller(i.id) !=0 %}
+
+          
+
+            {% for a in kayitliTahliller(i.id) %}
+
+            <hr>
+            <br>
+
+            <h5>{{a.replace("\\r"," ")}} Tarihli Tahlil Sonuçları</h5>
+
+            <div class="form-group">
+
+
+
+              <div>
+  
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Tahlil</th>
+                      <th scope="col">Sonuç</th>
+                      <th scope="col">Sonuç Birimi</th>
+                      <th scope="col">Referans</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+  
+  
+                    {% for j in tahlilAyrintilari(i.id,a) %}
+  
+                    <tr>
+                      <th scope="row"></th>
+                      <td>{{j.id}}</td>
+                      <td>{{j.to_dict()["sonuc"]}}</td>
+                      <td>{{j.to_dict()["birim"]}}</td>
+                      <td>{{j.to_dict()["referans"]}}</td>
+                    </tr>
+                    
+                    {% endfor %}
+  
+                  </tbody>
+                </table>
+              </div>
+  
+            </div>
+            
+            {% endfor %}
+
+          {% else %}
+
+          Kullanıcının Yüklediği Tahlil Bulunamadı!
+          {% endif %}
+  
+          
+        </div>
+        
+  
+      </div>
+  
+    </div>
+  </div>
+
+  <div class="modal" id="{{i.id}}adim">
+
+    <div class="modal-dialog modal-lg modal-lg">
+  
+      <div class="modal-content p-3">
+  
+        <div class="modal-header">
+          <h4>{{userInfo(i.id).to_dict()["name"] + " "+ userInfo(i.id).to_dict()["surname"]}} Adlı Kullanıcının Günlük Adım Bilgileri:</h4>
+          <button type="button" class="close" data-dismiss="modal" >&times;</button>
+        </div>
+        
+        <div class="modal-body">
+          
+          
+          {% if  adimGun_veriAra(i.id) ==0%}
+            
+          Kullanıcının Adım Bilgileri Bulunamadı!
+          {% else %}
+          <table class="table table-hover table-dark ">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">Tarih</th>
+                <th scope="col"><i class="fas fa-walking"></i> Adım Bilgisi</th>
+                
+              </tr>
+            </thead>
+            <tbody>
+            {% for j in  adimGun_veriAra(i.id)  %}
+            
+            <tr>
+              <th scope="row"></th>
+              <td>{{j}}</td>
+              <td>{{adimAyrintilari(i.id,j)}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+  
+          {% endif %}
+          
+        </div>
+        
+  
+      </div>
+  
+    </div>
+  </div>
+
+  <div class="modal" id="{{i.id}}nabiz">
+
+    <div class="modal-dialog modal-lg modal-lg">
+  
+      <div class="modal-content p-3">
+  
+        <div class="modal-header">
+          <h4>{{userInfo(i.id).to_dict()["name"] + " "+ userInfo(i.id).to_dict()["surname"]}} Adlı Kullanıcının Nabız Değerleri:</h4>
+          <button type="button" class="close" data-dismiss="modal" >&times;</button>
+        </div>
+        <div class="modal-body">
+          
+          
+    
+                {% if  nabizGun_veriAra(i.id)==0%}
+                Kullanıcının Nabız Verileri Bulunamadı!
+                {% else %}
+                <table class="table table-hover table-dark ">
+                  <thead>
+                    <tr>
+                      <th scope="col"></th>
+                      <th scope="col">Saat</th>
+                      <th scope="col"><i class="fas fa-walking"></i> Nabız Bilgisi</th>
+                      
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for j in nabizVerileri(i.id,nabizGun_veriAra(i.id)[0]) %}
+    
+                  <tr>
+                    <th scope="row"></th>
+                    <td>{{j[9:]}}</td>
+                    <td>{{j[:3]}}</td>
+                  </tr>
+                  
+                  {% endfor %}
+                </tbody>
+              </table>
+                {% endif %}
+    
+    
+            
+          
+        </div>
+        
+  
+      </div>
+  
+    </div>
+  </div>
+
+
+  {% endfor %}
+
+
+
+
+  {% for i in onaylanan_takipler["akraba"]%}
+              
+  
+  <div class="modal" id="{{i.id}}tahlil">
+
+    <div class="modal-dialog modal-lg modal-lg">
+  
+      <div class="modal-content p-3">
+  
+        <div class="modal-header">
+          <h4>{{userInfo(i.id).to_dict()["name"] + " "+ userInfo(i.id).to_dict()["surname"]}} Adlı Kullanıcının Tahlil Sonuçları:</h4>
+          <button type="button" class="close" data-dismiss="modal" >&times;</button>
+        </div>
+        <div class="modal-body">
+
+          
+
+          {% if kayitliTahliller(i.id) !=0 %}
+
+          
+
+            {% for a in kayitliTahliller(i.id) %}
+
+            <hr>
+            <br>
+
+            <h5>{{a.replace("\\r"," ")}} Tarihli Tahlil Sonuçları</h5>
+            <div class="form-group">
+
+
+
+              <div>
+  
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Tahlil</th>
+                      <th scope="col">Sonuç</th>
+                      <th scope="col">Sonuç Birimi</th>
+                      <th scope="col">Referans</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+  
+  
+                    {% for j in tahlilAyrintilari(i.id,a) %}
+  
+                    <tr>
+                      <th scope="row"></th>
+                      <td>{{j.id}}</td>
+                      <td>{{j.to_dict()["sonuc"]}}</td>
+                      <td>{{j.to_dict()["birim"]}}</td>
+                      <td>{{j.to_dict()["referans"]}}</td>
+                    </tr>
+                    
+                    {% endfor %}
+  
+                  </tbody>
+                </table>
+              </div>
+  
+            </div>
+            
+            {% endfor %}
+
+          {% else %}
+
+          Kullanıcının Yüklediği Tahlil Bulunamadı!
+          {% endif %}
+  
+          
+        </div>
+        
+  
+      </div>
+  
+    </div>
+  </div>
+
+  <div class="modal" id="{{i.id}}adim">
+
+    <div class="modal-dialog modal-lg modal-lg">
+  
+      <div class="modal-content p-3">
+  
+        <div class="modal-header">
+          <h4>{{userInfo(i.id).to_dict()["name"] + " "+ userInfo(i.id).to_dict()["surname"]}} Adlı Kullanıcının Günlük Adım Bilgileri:</h4>
+          <button type="button" class="close" data-dismiss="modal" >&times;</button>
+        </div>
+        <div class="modal-body">
+          
+          
+          {% if  adimGun_veriAra(i.id) ==0%}
+            
+          Kullanıcının Adım Bilgileri Bulunamadı!
+          {% else %}
+          <table class="table table-hover table-dark ">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">Tarih</th>
+                <th scope="col"><i class="fas fa-walking"></i> Adım Bilgisi</th>
+                
+              </tr>
+            </thead>
+            <tbody>
+            {% for j in  adimGun_veriAra(i.id)  %}
+            
+            <tr>
+              <th scope="row"></th>
+              <td>{{j}}</td>
+              <td>{{adimAyrintilari(i.id,j)}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+  
+          {% endif %}
+          
+        </div>
+        
+  
+      </div>
+  
+    </div>
+  </div>
+
+  <div class="modal" id="{{i.id}}nabiz">
+
+    <div class="modal-dialog modal-lg modal-lg">
+  
+      <div class="modal-content p-3">
+  
+        <div class="modal-header">
+          <h4>{{userInfo(i.id).to_dict()["name"] + " "+ userInfo(i.id).to_dict()["surname"]}} Adlı Kullanıcının Nabız Değerleri:</h4>
+          <button type="button" class="close" data-dismiss="modal" >&times;</button>
+        </div>
+        <div class="modal-body">
+          
+          
+    
+          {% if  nabizGun_veriAra(i.id)==0%}
+          Kullanıcının Nabız Verileri Bulunamadı!
+          {% else %}
+          <table class="table table-hover table-dark ">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">Saat</th>
+                <th scope="col"><i class="fas fa-walking"></i> Nabız Bilgisi</th>
+                
+              </tr>
+            </thead>
+            <tbody>
+            {% for j in nabizVerileri(i.id,nabizGun_veriAra(i.id)[0]) %}
+
+            <tr>
+              <th scope="row"></th>
+              <td>{{j[9:]}}</td>
+              <td>{{j[:3]}}</td>
+            </tr>
+            
+            {% endfor %}
+          </tbody>
+        </table>
+          {% endif %}
+
+
+      
+    
+  </div>
+        
+  
+      </div>
+  
+    </div>
+  </div>
+
+
+  {% endfor %}
+
+  {% for i in onaylanan_takipler["arkadas"]%}
+              
+  
+  <div class="modal" id="{{i.id}}tahlil">
+
+    <div class="modal-dialog modal-lg modal-lg">
+  
+      <div class="modal-content p-3">
+  
+        <div class="modal-header">
+          <h4>{{userInfo(i.id).to_dict()["name"] + " "+ userInfo(i.id).to_dict()["surname"]}} Adlı Kullanıcının Tahlil Sonuçları:</h4>
+          <button type="button" class="close" data-dismiss="modal" >&times;</button>
+        </div>
+        <div class="modal-body">
+
+          
+
+          {% if kayitliTahliller(i.id) !=0 %}
+
+          
+
+            {% for a in kayitliTahliller(i.id) %}
+
+            <hr>
+            <br>
+
+            <h5>{{a.replace("\\r"," ")}} Tarihli Tahlil Sonuçları</h5>
+            <div class="form-group">
+
+
+
+              <div>
+  
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Tahlil</th>
+                      <th scope="col">Sonuç</th>
+                      <th scope="col">Sonuç Birimi</th>
+                      <th scope="col">Referans</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+  
+  
+                    {% for j in tahlilAyrintilari(i.id,a) %}
+  
+                    <tr>
+                      <th scope="row"></th>
+                      <td>{{j.id}}</td>
+                      <td>{{j.to_dict()["sonuc"]}}</td>
+                      <td>{{j.to_dict()["birim"]}}</td>
+                      <td>{{j.to_dict()["referans"]}}</td>
+                    </tr>
+                    
+                    {% endfor %}
+  
+                  </tbody>
+                </table>
+              </div>
+  
+            </div>
+            
+            {% endfor %}
+
+          {% else %}
+
+          Kullanıcının Yüklediği Tahlil Bulunamadı!
+          {% endif %}
+  
+          
+        </div>
+        
+  
+      </div>
+  
+    </div>
+  </div>
+
+  <div class="modal" id="{{i.id}}adim">
+
+    <div class="modal-dialog modal-lg">
+  
+      <div class="modal-content p-3">
+  
+        <div class="modal-header">
+          <h4>{{userInfo(i.id).to_dict()["name"] + " "+ userInfo(i.id).to_dict()["surname"]}} Adlı Kullanıcının Günlük Adım Bilgileri:</h4>
+          <button type="button" class="close" data-dismiss="modal" >&times;</button>
+        </div>
+        <div class="modal-body">
+          
+          
+          {% if  adimGun_veriAra(i.id) ==0%}
+            
+          Kullanıcının Adım Bilgileri Bulunamadı!
+          {% else %}
+          <table class="table table-hover table-dark ">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">Tarih</th>
+                <th scope="col"><i class="fas fa-walking"></i> Adım Bilgisi</th>
+                
+              </tr>
+            </thead>
+            <tbody>
+            {% for j in  adimGun_veriAra(i.id)  %}
+            
+            <tr>
+              <th scope="row"></th>
+              <td>{{j}}</td>
+              <td>{{adimAyrintilari(i.id,j)}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+  
+          {% endif %}
+          
+        </div>
+        
+  
+      </div>
+  
+    </div>
+  </div>
+
+  <div class="modal" id="{{i.id}}nabiz">
+
+    <div class="modal-dialog modal-lg">
+  
+      <div class="modal-content p-3">
+  
+        <div class="modal-header">
+          <h4>{{userInfo(i.id).to_dict()["name"] + " "+ userInfo(i.id).to_dict()["surname"]}} Adlı Kullanıcının Nabız Değerleri:</h4>
+          <button type="button" class="close" data-dismiss="modal" >&times;</button>
+        </div>
+        <div class="modal-body">
+          
+          
+    
+          {% if  nabizGun_veriAra(i.id)==0%}
+          Kullanıcının Nabız Verileri Bulunamadı!
+          {% else %}
+          <table class="table table-hover table-dark ">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">Saat</th>
+                <th scope="col"><i class="fas fa-walking"></i> Nabız Bilgisi</th>
+                
+              </tr>
+            </thead>
+            <tbody>
+            {% for j in nabizVerileri(i.id,nabizGun_veriAra(i.id)[0]) %}
+
+            <tr>
+              <th scope="row"></th>
+              <td>{{j[9:]}}</td>
+              <td>{{j[:3]}}</td>
+            </tr>
+            
+            {% endfor %}
+          </tbody>
+        </table>
+          {% endif %}
+
+
+      
+    
+  </div>
+  
+      </div>
+  
+    </div>
+  </div>
+
+
+  {% endfor %}
+
+{% else %}
+{% endif %}
+
+
+
+
+
+{% from "includes/formhelpers.html" import render_field %}
+
+<div class="container icerik">
+
+    
+
+    <p></p>
+    
+    {% if  onaylanan_takipler == 0%}
+    <div class="alert alert-warning alert-dismissible fade show self-notify" role="alert">
+      <strong>Yakın Takip Listenizde Gösterilecek Kullanıcı Bulunamadı!</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% else %}
+    {% endif %}
+
+   
+
+
+    <div class="container">
+      <div class=" self-div1 ">
+         
+              
+             
+              <div class="form-group">
+                 
+                  <h3 class="">Bir Yakınını Takip Et</h3>
+                  <hr>
+                  <p>Sistemde kayıtlı yakınının email adresini girerek yakınına takip isteği gönder.</p>
+                  <form method = "post" class="form-group form-content">
+                    <!-- Deneme <input type="text" name="deneme"> -->
+                    {{ render_field(joinForm.yakin_email,class= "",class="form-control deneme", placeholder="Yakın Email Adresini Giriniz.", style="width: 50%") }}
+                    {{ render_field(joinForm.yakinlik,class= "",class="form-control deneme", placeholder="", style="width: 50%") }}
+                    
+                
+                
+                    <button type="submit" class="btn btn-danger mt-4" name="submit_button" value="yakinIstegi_yolla">İstek Gönder</button>
+                    
+                  </form>
+                  
+              </div>         
+      </div>
+     
+      {% if onaylanan_takipler != 0 %}
+
+      <div class="takipEdilenler mt-4" style="background-color: #fff;">
+
+        <table class="table table-hover ">
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Yakınlık</th>
+              <th scope="col">Ad Soyad</th>
+              <th scope="col"><i class="fas fa-vial "></i>Tahlil</th>
+              <th><i class="fas fa-heartbeat"></i>Nabız</th>
+              <th><i class="fas fa-walking"></i>Adım Bilgileri</th> 
+              
+            </tr>
+          </thead>
+        
+        <tbody>
+          
+
+          {% for i in onaylanan_takipler["aile"]%}
+            
+            <tr>
+                <th scope="row"></th>
+                <td>Aile</td>
+                <td>{{userInfo(i.id).to_dict()["name"] + " " +userInfo(i.id).to_dict()["surname"]}}</td>
+                {% if izinleriDon(userID,i.id).to_dict()["tahlil"] %}
+                <td>
+                  <a href="#" data-toggle="modal" data-target="#{{i.id}}tahlil" style="color: green; font-weight: bold;" class="d-inline ">Göster</a> 
+                </td>
+                {% else %}
+                <td>İznininiz Yok!</td>
+                {% endif %}
+
+                {% if izinleriDon(userID,i.id).to_dict()["nabiz"] %}
+                <td>
+                  <a href="#" data-toggle="modal" data-target="#{{i.id}}nabiz" style="color: green; font-weight: bold;" class="d-inline ">Göster</a> 
+                </td>
+                {% else %}
+                <td>İznininiz Yok!</td>
+                {% endif %}
+
+                {% if izinleriDon(userID,i.id).to_dict()["adim"] %}
+                <td>
+                  <a href="#" data-toggle="modal" data-target="#{{i.id}}adim" style="color: green; font-weight: bold;" class="d-inline ">Göster</a> 
+                </td>
+                {% else %}
+                <td>İznininiz Yok!</td>
+                {% endif %}
+                  
+                
+                
+              </tr>
+          
+
+          {% endfor %}
+
+          {% for i in onaylanan_takipler["akraba"]%}
+
+            <tr>
+              <th scope="row"></th>
+              <td>Akraba</td>
+              <td>{{userInfo(i.id).to_dict()["name"] + " " + userInfo(i.id).to_dict()["surname"]}}</td>
+              {% if izinleriDon(userID,i.id).to_dict()["tahlil"] %}
+              <td>
+                <a href="#" data-toggle="modal" data-target="#{{i.id}}tahlil" style="color: green; font-weight: bold;" class="d-inline ">Göster</a> 
+              </td>
+              {% else %}
+              <td>İznininiz Yok!</td>
+              {% endif %}
+
+              {% if izinleriDon(userID,i.id).to_dict()["nabiz"] %}
+              <td>
+                <a href="#" data-toggle="modal" data-target="#{{i.id}}nabiz" style="color: green; font-weight: bold;" class="d-inline ">Göster</a> 
+              </td>
+              {% else %}
+              <td>İznininiz Yok!</td>
+              {% endif %}
+
+              {% if izinleriDon(userID,i.id).to_dict()["adim"] %}
+              <td>
+                <a href="#" data-toggle="modal" data-target="#{{i.id}}adim" style="color: green; font-weight: bold;" class="d-inline ">Göster</a> 
+              </td>
+              {% else %}
+              <td>İznininiz Yok!</td>
+              {% endif %}
+
+
+            </tr>
+
+
+          {% endfor %}
+          
+          {% for i in onaylanan_takipler["arkadas"]%}
+            <tr>
+              <th scope="row"></th>
+              <td>Arkadaş</td>
+              <td>{{userInfo(i.id).to_dict()["name"] + " " + userInfo(i.id).to_dict()["surname"]}}</td>
+              {% if izinleriDon(userID,i.id).to_dict()["tahlil"] %}
+              <td>
+                <a href="#" data-toggle="modal" data-target="#{{i.id}}tahlil" style="color: green; font-weight: bold;" class="d-inline ">Göster</a> 
+              </td>
+              {% else %}
+              <td>İznininiz Yok!</td>
+              {% endif %}
+
+              {% if izinleriDon(userID,i.id).to_dict()["nabiz"] %}
+              <td>
+                <a href="#" data-toggle="modal" data-target="#{{i.id}}nabiz" style="color: green; font-weight: bold;" class="d-inline ">Göster</a> 
+              </td>
+              {% else %}
+              <td>İznininiz Yok!</td>
+              {% endif %}
+
+              {% if izinleriDon(userID,i.id).to_dict()["adim"] %}
+              <td>
+                <a href="#" data-toggle="modal" data-target="#{{i.id}}adim" style="color: green; font-weight: bold;" class="d-inline ">Göster</a> 
+              </td>
+              {% else %}
+              <td>İznininiz Yok!</td>
+              {% endif %}
+            </tr>
+          
+          {% endfor %}
+        
+        </tbody>
+        
+        </table>
+      </div>
+      {% else %}
+      {% endif %}
+
+      
+
+      
+
+          
+      </div>
+     
+  </div>
+
+
+    
+
+</div>
+
+
+
+{% endblock body %}

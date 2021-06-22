@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+
+<style></style>
+{% block css %}
+
+    .baslik{
+
+        color: white;
+    }
+
+    .margin{
+
+        margin-top: 500px;
+    }
+
+    .width{
+
+        width: 70%;
+
+        
+    }
+
+    .form{
+
+        padding: 50px;
+        background-color: rgba(255,255,255,0.3)
+        
+    }
+
+    form{
+
+        margin-left: 600px;
+    }
+
+
+
+
+{% endblock css %}
+
+<style></style>
+
+
+
+
+{% block body %}
+
+{% from "includes/formhelpers.html" import render_field %}
+
+<div class="container">
+<h3 class="baslik">Kayıt Ol</h3>
+<hr>
+<div class="form">
+    <form method = "post">
+        <!-- <p>İsim Soyisim: </p> -->
+        {{ render_field(form.name,class="form-control width") }}
+        {{ render_field(form.surname,class="form-control width") }}
+        {{ render_field(form.tel,class="form-control width") }}
+        {{ render_field(form.email,class="form-control width") }}
+        {{ render_field(form.tcNo,class="form-control width") }}
+        {{ render_field(form.password,class="form-control width") }}
+        {{ render_field(form.confirmPass,class="form-control width") }}
+
+        <button type="submit" class="btn btn-danger mt-4">Kayıt Ol</button>
+
+    </form>
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+{% endblock body %}

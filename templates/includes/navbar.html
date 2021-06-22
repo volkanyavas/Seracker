@@ -1,0 +1,449 @@
+{% if session["logged_in"] %}
+
+  
+
+    {% if takip_istekleri != 0  %}
+    
+      {% for i in takip_istekleri %}
+
+      
+      <div class="modal" id="{{i.id}}">
+
+        <div class="modal-dialog">
+      
+          <div class="modal-content p-3">
+      
+            <div class="modal-header">
+              <h4>{{userInfo(i.id).to_dict()["name"] + " "+ userInfo(i.id).to_dict()["surname"]}} Adlı kullanıcı için:</h4>
+              <button type="button" class="close" data-dismiss="modal" >&times;</button>
+            </div>
+            <div class="modal-body">
+      
+              <form method="post" class="form-group form-content">
+      
+              <div class="yakinlik block w-50 ">
+                      
+                <label for="yakinlik">Yakınlık Durumu:</label>
+      
+                <select name="takipci_yakinlik" class="form-control" place>
+                    <option value="aile">Aile</option>
+                    <option value="akraba">Akraba</option>
+                    <option value="arkadas">Arkadaş</option>
+      
+                </select>
+      
+                
+      
+            </div><br><br>
+      
+      
+            <div class="izinler form-group block w-75 ">
+      
+                <label for="">İzin Verilen Sağlık Verileri:</label><br>
+      
+                
+                <label for="tahlil" class=""><i class="fas fa-vial "></i>Tahlil</label>
+                <input type="checkbox" id="tahlil" class="mr-3" name="tahlil" value="tahlil">        
+      
+                
+                <label for="nabiz" class=""><i class="fas fa-heartbeat"></i>Nabız</label>   
+                <input type="checkbox" id="nabiz" class="mr-3" name="nabiz" value="nabiz">
+      
+                
+                <label for="adim" class=""><i class="fas fa-walking"></i>Adım Sayar</label>   
+                <input type="checkbox" id="adim" name="adim" value="adim">
+            </div><br>
+            <button type="submit" class="btn btn-danger mt-4" name="submit_button" value="1_{{i.id}}">Onayla</button>
+                                      
+            </form>
+            </div>
+            
+      
+          </div>
+      
+        </div>
+      
+      </div>
+            
+      {% endfor %}
+
+    {% else %}
+    {% endif %}
+
+ 
+
+
+{% else %}
+{% endif %}
+
+
+
+
+<div class="modal" id="myModal1">
+
+  <div class="modal-dialog">
+
+    <div class="modal-content p-3">
+
+      <div class="modal-header">
+        <h4>Osman Kılıç Adlı kullanıcı için:</h4>
+        <button type="button" class="close" data-dismiss="modal" >&times;</button>
+      </div>
+      <div class="modal-body">
+
+        <form method="post" class="form-group form-content">
+
+        <div class="yakinlik block w-50 ">
+                
+          <label for="yakinlik">Yakınlık Durumu:</label>
+
+          <select name="yakinlik" class="form-control" place>
+              <option value="aile">Aile</option>
+              <option value="akraba">Akraba</option>
+              <option value="arkadas">Arkadaş</option>
+
+          </select>
+
+          
+
+      </div><br><br>
+
+
+      <div class="izinler form-group block w-75 ">
+
+          <label for="">İzin Verilen Sağlık Verileri:</label><br>
+
+          
+          <label for="tahlil" class=""><i class="fas fa-vial "></i>Tahlil</label>
+          <input type="checkbox" id="tahlil" class="mr-3" name="tahlil" value="tahlil">        
+
+          
+          <label for="nabiz" class=""><i class="fas fa-heartbeat"></i>Nabız</label>   
+          <input type="checkbox" id="nabiz" class="mr-3" name="nabiz" value="nabiz">
+
+          
+          <label for="adim" class=""><i class="fas fa-walking"></i>Adım Sayar</label>   
+          <input type="checkbox" id="adim" name="adim" value="adim">
+      </div><br>
+      <button type="submit" class="btn btn-danger mt-4" name="submit_button" value="Uyelik">Onayla</button>
+                                
+      </form>
+      </div>
+      
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<div class="modal" id="myModal2">
+
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h3>Lale</h3>
+        <button type="button" class="close" data-dismiss="modal" >&times;</button>
+      </div>
+      <div class="modal-body">
+        Lorem ipsum dolor sit.
+      </div>
+      <div class="modal-footer">
+
+        <button class="btn btn-primary" type="button" class
+        >Onayla</button>
+
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark ">
+    {% if session["logged_in"] %}
+    <a href="/homepage"><img src="{{imgGetir("seracker-bas.png")}}" alt="" class="logo-bas"><img src="{{imgGetir("seracker-orta.png")}}" alt="" class="logo-orta logo-pulse"></a><img src="{{imgGetir("seracker-son.png")}}" alt="" class="logo-son"></a>
+    {% else %}
+    <a href="/"><img src="{{imgGetir("seracker-bas.png")}}" alt="" class="logo-bas"><img src="{{imgGetir("seracker-orta.png")}}" alt="" class="logo-orta logo-pulse"></a><img src="{{imgGetir("seracker-son.png")}}" alt="" class="logo-son"></a>
+    {% endif %}
+    
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav mr-auto">
+
+        {% if session["logged_in"] %}
+        
+        <li class="nav-item active ml-4">
+          
+          <a class="nav-link" href="/yakinlarim"><i class='fas fa-users text-white'></i>
+          Yakınlarım</a>
+          
+        </li>
+
+        <li class="nav-item active dropdown">
+          
+          <!-- <a class="nav-link" href="/dashboard"><i class="fas fa-table"></i>
+          Verilerim</a> -->
+
+          <a class="nav-link dropdown-toggle self-pointer"  data-toggle="dropdown">
+            <i class="fas fa-table"></i>
+            Verilerim
+          </a>
+          
+          <div class="dropdown-menu">
+
+            
+            <a href="/tahlil" class="dropdown-item"><i class="fas fa-vial "></i> Tahlil Sonuçları</a>
+            <a href="/nabizbilgisi" class="dropdown-item"><i class="fas fa-heartbeat"></i> Nabız Verilerim</a>
+            <a href="/adimbilgisi" class="dropdown-item"><i class="fas fa-walking"></i>  Adım Bilgilerim</a>
+          </div>
+
+          
+        </li>
+        
+        
+        {% else %}
+        {% endif %}
+
+
+        <li class="nav-item active">
+
+          <a class="nav-link" href="/about">Hakkımızda </a>
+        </li>
+
+        
+        
+      </ul>
+
+      <ul class="navbar-nav ml-auto">
+
+        {% if session["logged_in"] %}
+
+
+
+        <li class="nav-item active dropdown">
+
+          {% if takip_istekleri == 0  %}
+          <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true"
+            aria-expanded="false"> <i class="fas fa-bell"></i>Bildirimler  </a>
+          {% else %}
+          <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true"
+            aria-expanded="false"> <i class="fas fa-bell"></i><sup style="color: black;"><b style="border-radius: 50%; width: 100px;" class="rounded-circle bg-danger">&nbsp;{{uzunlukDon(takip_istekleri)}}&nbsp;</b></sup> Bildirimler</a>
+          {% endif %}
+          <ul class="dropdown-menu notify-drop">
+            <div class="notify-drop-title">
+              <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-6">Bildirimler </div>
+                <div class="col-md-6 col-sm-6 col-xs-6 text-right"><a href="" class="rIcon allRead" data-tooltip="tooltip"
+                    data-placement="bottom" title="tümü okundu."><i class="fa fa-dot-circle-o"></i></a></div>
+              </div>
+            </div>
+            <!-- end notify title -->
+            <!-- notify content -->
+            <div class="drop-content">
+
+              {% if takip_istekleri == 0 %}
+                <h4>Gösterilecek bildirim bulunmuyor!</h4>
+              {% else %}
+
+
+              {% for i in takip_istekleri %}
+
+              <li>
+                <div class="col-2">
+                  <div class="notify-img"><img style="width: 44px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpd4mJRIUwqgE8D_Z2znANEbtiz4GhI4M8NQ&usqp=CAU" alt="">
+                  </div>
+                </div>
+
+                <div class="col-10  pd-l0 mb-0" style="font-size: 16px; "><a href="">{{userInfo(i.id).to_dict()["name"] + " "+ userInfo(i.id).to_dict()["surname"]}} size yakın takip isteği gönderdi</a> 
+                  <div style="margin-left: 60px; margin-top: 0px;">
+                  <a href="#" data-toggle="modal" data-target="#{{i.id}}" style="color: green; font-weight: bold;" class="d-inline "><i class="fas fa-check"></i> Onayla</a> 
+                  
+                  <form method="post" class="form-group form-content d-inline ml-2">
+                  <!-- <a  type="submit" name="submit_button" value="0_{{i.id}}" style="color: red; font-weight: bold;">Reddet</a> -->
+                  <button type="submit" class=" mt-4" name="submit_button" value="0_{{i.id}}" style="color: red; font-weight: bold; border: 0; background: transparent; font-size: 12px;"><i class="fas fa-times"></i> Reddet</button>
+                  </form> 
+                </div>
+                  <!-- <p class="time">29 Dakika önce</p> -->
+                </div>
+              </li>
+              
+              {% endfor %}
+
+              {% endif %}
+
+      
+              
+              
+              
+              <!-- <li>
+                <div class="col-2">
+                  <div class="notify-img"><img style="width: 44px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpd4mJRIUwqgE8D_Z2znANEbtiz4GhI4M8NQ&usqp=CAU" alt="">
+                  </div>
+                </div>
+
+                <div class="col-10  pd-l0"><a href="">Recep Kılıç size yakınlık kurma isteği gönderdi</a> 
+                  <div style="margin-left: 60px; margin-top: 5px;">
+                  <a href="#" data-toggle="modal" data-target="#myModal" style="color: green; font-weight: bold;" class="">Onayla</a> 
+                  
+
+                  <a href="#" style="color: red; font-weight: bold;">Reddet</a> </div>
+                  <p class="time">29 Dakika önce</p>
+                </div>
+              </li>
+
+              
+
+              <li>
+                <div class="col-2">
+                  <div class="notify-img"><img style="width: 44px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpd4mJRIUwqgE8D_Z2znANEbtiz4GhI4M8NQ&usqp=CAU" alt="">
+                  </div>
+                </div>
+
+                <div class="col-10  pd-l0"><a href="">Metin Akın size yakınlık kurma isteği gönderdi</a> 
+                  <div style="margin-left: 60px; margin-top: 5px;"><a href="#" style="color: green; font-weight: bold;">Onayla</a> 
+                  <a href="#" style="color: red; font-weight: bold;">Reddet</a> </div>
+                  <p class="time">29 Dakika önce</p>
+                </div>
+              </li>
+
+              <li>
+                <div class="col-2">
+                  <div class="notify-img"><img style="width: 44px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpd4mJRIUwqgE8D_Z2znANEbtiz4GhI4M8NQ&usqp=CAU" alt="">
+                  </div>
+                </div>
+
+                <div class="col-10  pd-l0"><a href="">Fatih Güven size yakınlık kurma isteği gönderdi</a> 
+                  <div style="margin-left: 60px; margin-top: 5px;"><a href="#" style="color: green; font-weight: bold;">Onayla</a> 
+                  <a href="#" style="color: red; font-weight: bold;">Reddet</a> </div>
+                  <p class="time">29 Dakika önce</p>
+                </div>
+              </li>
+
+              <li>
+                <div class="col-2">
+                  <div class="notify-img"><img style="width: 44px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpd4mJRIUwqgE8D_Z2znANEbtiz4GhI4M8NQ&usqp=CAU" alt="">
+                  </div>
+                </div>
+
+                <div class="col-10  pd-l0"><a href="">Ahmet Çınar size yakınlık kurma isteği gönderdi</a> 
+                  <div style="margin-left: 60px; margin-top: 5px;"><a href="#" style="color: green; font-weight: bold;">Onayla</a> 
+                  <a href="#" style="color: red; font-weight: bold;">Reddet</a> </div>
+                  <p class="time">29 Dakika önce</p>
+                </div>
+              </li>
+
+              <li>
+                <div class="col-2">
+                  <div class="notify-img"><img style="width: 44px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpd4mJRIUwqgE8D_Z2znANEbtiz4GhI4M8NQ&usqp=CAU" alt="">
+                  </div>
+                </div>
+
+                <div class="col-10  pd-l0"><a href="">Ahmet Çınar size yakınlık kurma isteği gönderdi</a> 
+                  <div style="margin-left: 60px; margin-top: 5px;"><a href="#" style="color: green; font-weight: bold;">Onayla</a> 
+                  <a href="#" style="color: red; font-weight: bold;">Reddet</a> </div>
+                  <p class="time">29 Dakika önce</p>
+                </div>
+              </li>
+
+              <li>
+                <div class="col-2">
+                  <div class="notify-img"><img style="width: 44px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpd4mJRIUwqgE8D_Z2znANEbtiz4GhI4M8NQ&usqp=CAU" alt="">
+                  </div>
+                </div>
+
+                <div class="col-10  pd-l0"><a href="">Ahmet Çınar size yakınlık kurma isteği gönderdi</a> 
+                  <div style="margin-left: 60px; margin-top: 5px;"><a href="#" style="color: green; font-weight: bold;">Onayla</a> 
+                  <a href="#" style="color: red; font-weight: bold;">Reddet</a> </div>
+                  <p class="time">29 Dakika önce</p>
+                </div>
+              </li> -->
+
+              <!-- <li>
+                <div class="col-md-2">
+                  <div class="notify-img"><img style="width: 44px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT23UzvCSf4PV2qdcouFPXYuU_GuFLevgACITJz9HW3HIbLBHXN0l00HNdw3cGMhlheZRo&usqp=CAU" alt="">
+                  </div>
+                </div>
+                
+                <div class="col-md-8  pd-l0"><a href="">Ahmet Çınar size yakınlık kurma isteği gönderdi</a> <a href="" class="rIcon"><i
+                      class="fa fa-dot-circle-o"></i></a>
+                  <p>Onayla Reddet</p>
+                  <p class="time">29 Dakika önce</p>
+                </div>
+              </li> -->
+              
+              
+              
+            </div>
+
+          </ul>
+        </li>
+
+
+        <li class="nav-item active dropdown">
+
+          
+
+
+
+
+            <a class="nav-link dropdown-toggle self-pointer"  data-toggle="dropdown">
+            <i class='fas fa-user-alt'></i>
+            {{session["name"] + " " + session["surname"]}}</a>
+
+            <div class="dropdown-menu">
+
+              <a href="/personal" class="dropdown-item">Bilgi Güncelleme</a>
+              <a href="/sifredegistir" class="dropdown-item">Şifre Değiştir</a>
+              <a class="dropdown-item" href="/cikisyap">Çıkış Yap</a>
+
+          
+
+            </div>
+
+       
+
+
+
+
+
+
+        </li>
+
+        
+        <!-- <li class="nav-item active ">
+          <a class="nav-link" href="/dashboard">Kontrol Paneli</a>
+        </li> -->
+        <!-- <li class="nav-item active ">
+          <a class="nav-link" href="/cikisyap">Çıkış Yap</a>
+        </li> -->
+        {% else %}
+        <li class="nav-item active ">
+          <a class="nav-link" href="/girisyap">Giriş Yap</a>
+        </li>
+        <li class="nav-item active ">
+          <a class="nav-link" href="/kayitol">Kayıt Olun </a>
+        </li>
+        {% endif %}
+
+
+        
+        
+      </ul>
+      
+    </div>
+  </nav>

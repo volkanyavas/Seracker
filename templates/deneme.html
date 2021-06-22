@@ -1,0 +1,89 @@
+{% extends "layout.html" %}
+
+
+<style>
+
+{% block css %}
+
+
+    
+    .bilgi{
+
+        margin-top: 100px;;
+    }
+   
+    .icerik{
+
+        padding: 70px;
+
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+    
+    
+
+
+
+{% endblock  %}
+
+</style>
+
+
+{% block body %}
+
+
+<div class="bg clearfix" >
+    
+    
+    
+    <main >
+        <div class="container " >
+    
+           
+            <div class="row icerik">
+                <img src="{{bg}}" alt="">
+               
+                <div class="col-md-5 "style="margin-top: 250px">
+                   
+                        
+                       
+                        <div class="form-group">
+                           
+                            <label for="tc"  class="text-white">TC Kimlik No</label>
+                            <input type="text" id="tc" class="form-control" placeholder="TC kimliğinizi giriniz.">
+                            
+                        </div>
+                        <div class="form-group">
+                           
+                            <label for="password" class="text-white">Şifre</label>
+                            <input type="password" id="password" class="form-control" placeholder="Şifrenizi giriniz.">
+                            
+                        </div>
+                        
+                         <button class="btn btn-primary" type="button">Giriş</button>
+                         
+                         <a href="register.html" class="float-right text-white gre">Kayıt Ol</a>
+                         
+                         
+                </div>
+                
+                 <div class="col-md-7 px-5 bilgi">
+                    <div class="img" style="margin-left: 150px; width: 600px;">
+
+                        <img src="{{imgGetir("saat.png")}}" style="width: 50%"  alt="" >
+
+                    </div>
+                    
+                    
+                    <p class="text-white text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. In a reprehenderit ab debitis est earum non nisi quisquam, libero blanditiis eos nobis quidem at fugiat illo, sit error minus incidunt.</p>
+                </div>
+               
+            </div>
+           
+        </div>
+    </main>
+    
+ </div>
+   
+
+
+{% endblock  %}

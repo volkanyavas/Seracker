@@ -1,0 +1,288 @@
+{% extends "layout.html" %}
+
+
+<style>
+    {
+        % block css %
+    }
+
+    .block {
+
+        display: inline-block;
+        margin-top: 10px;
+        margin-right: 10px;
+    }
+
+    .container {
+
+        background-color: rgba(255, 255, 255, 0.3);
+        padding: 20px;
+
+    }
+
+    .container{
+
+        background: transparent;
+    }
+
+        {
+        % endblock css %
+    }
+</style>
+
+
+
+{% block body %}
+
+
+<div class="container">
+
+
+    <div id="accordion">
+
+        <div class="card">
+
+            <div class="card-header">
+                <a href="#collapseOne" class="card-link" data-toggle="collapse">
+                    <h3>Hesap Bilgileri</h3>
+                </a>
+            </div>
+
+            <div id="collapseOne" class="collapse" style="background: transparent;" data-parent="#accordion">
+
+                <div class="card-body" >
+                    <div class="form-group">
+
+                        
+                
+                        <div>
+                
+                            <form method="post" class="form-group form-content">
+
+                                <div>
+                
+                                    <div class="isim form-group block w-25">
+                                        <label for="boy" class="form-text">İsim:</label>
+                                        <input type="text" name="name" class="form-control" placeholder="İsminizi Giriniz" value="{{session["name"]}}">
+                                    </div>
+                
+                                    <div class="soyisim form-group form-content block w-25">
+                                        <label for="kilo" class="form-text">Soyisim:</label>
+                                        <input type="text" name="surname" class="form-control" placeholder="Soyisminizi giriniz." value="{{session["surname"]}}">
+                                    </div>
+                
+                                </div>
+
+                
+                                <div class="telefon form-group block w-50">
+                                    <label for="tel" class="form-text">Telefon Numarası:</label>
+                                    <input type="text" name="tel" class="form-control" placeholder="Başında sıfır olmadan giriniz." value="{{session["telNo"]}}">
+                                </div>
+                                
+                                <div class="email form-group block w-50">
+                                    <label for="email" class="form-text">Email Adresi:</label>
+                                    <input type="text" name="email" class="form-control" placeholder="Email adresinizi giriniz." value="{{session["email"]}}">
+                                </div>
+
+                                <div class="tcNo form-group block w-50">
+                                    <label for="tcNo" class="form-text">TC No:</label>
+                                    <input type="text" name="tcNo" class="form-control" placeholder="Tc Kimlik Numranızı Giriniz." value="{{session["tcNo"]}}">
+                                </div>
+
+                                <br>
+
+                                <button type="submit" class="btn btn-danger mt-4" name="submit_button" value="Uyelik">Güncelle</button>
+                                
+                            </form>
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <div id="accordion">
+
+        <div class="card">
+
+            <div class="card-header">
+                <a href="#collapseTwo" class="card-link" data-toggle="collapse">
+                    <h3>Kişisel Bilgiler</h3>
+                </a>
+            </div>
+
+            <div id="collapseTwo" class="collapse show" style="background: transparent;" data-parent="#accordion">
+
+                <div class="card-body" >
+                    <div class="form-group">
+
+
+                
+                        <div>
+                
+                            <form method="post" class="form-group form-content">
+                                <div class="cinsiyet block  mr-4 w-50">
+                                    <label for="cinsiyet" class="form-text">Cinsiyet:</label>
+                
+                                    <select name="cinsiyet" id="cinsiyet" class="form-control">
+                                        {% if  session["cinsiyet"] == "erkek"%}
+                                        <option value="erkek" selected>Erkek</option>
+                                        {% else %}
+                                        <option value="erkek">Erkek</option>
+                                        {% endif %}
+                                        
+                                        {% if  session["cinsiyet"] == "kadin"%}
+                                        <option value="kadin" selected>Kadın</option>
+                                        {% else %}
+                                        <option value="kadin">Kadın</option>
+                                        {% endif %}
+                                        
+                                        {% if  session["cinsiyet"] == "belirsiz"%}
+                                        <option value="belirsiz" selected>Belirtmek İstemiyorum</option>
+                                        {% else %}
+                                        <option value="belirsiz">Belirtmek İstemiyorum</option>
+                                        {% endif %}
+                                      
+                                        
+                                    </select>
+                                </div>
+                
+                                
+                
+                                <br>
+                
+                                <div>
+                
+                                    <div class="boy form-group block w-25">
+                                        <label for="boy" class="form-text">Boy:</label>
+                                        {% if  session["boy"] ==-1%}
+                                        <input type="text" name="boy" class="form-control" placeholder="Boyunuzu cm olarak giriniz.">
+                                        {% else %}
+                                        <input type="text" name="boy" class="form-control" placeholder="Boyunuzu cm olarak giriniz." value="{{session["boy"]}}">
+                                        {% endif %}
+                                        
+                                    </div>
+                
+                                    <div class="kilo form-group form-content block w-25">
+                                        <label for="kilo" class="form-text">Kilo:</label>
+                                        {% if  session["kilo"] ==-1%}
+                                        <input type="text" name="kilo" class="form-control" placeholder="Kilonuzu giriniz.">
+                                        {% else %}
+                                        <input type="text" name="kilo" class="form-control" placeholder="Kilonuzu giriniz." value="{{session["kilo"]}}">
+                                        {% endif %}
+                                    </div>
+                
+                                </div>
+                
+                                <br>
+                                
+                                <div class="kanGrubu block w-50 ">
+                
+                                    <label for="kanGrubu">Kan Grubunuz:</label>
+                
+                                    <select name="kanGrubu" class="form-control" value="{{session["kanGrubu"]}}">
+                                        
+                                        {% if  session["kanGrubu"] == "bilinmiyor"%}
+                                        <option value="bilinmiyor" selected>Bilmiyorum</option>
+                                        {% else %}
+                                        <option value="bilinmiyor">Bilmiyorum</option>
+                                        {% endif %}
+
+
+                                        {% if  session["kanGrubu"] == "A+"%}
+                                        <option value="A+" selected>A+</option>
+                                        {% else %}
+                                        <option value="A+">A+</option>
+                                        {% endif %}
+
+                                        {% if  session["kanGrubu"] == "A-"%}
+                                        <option value="A-" selected>A-</option>
+                                        {% else %}
+                                        <option value="A-">A-</option>
+                                        {% endif %}
+
+                                        {% if  session["kanGrubu"] == "B+"%}
+                                        <option value="B+" selected>B+</option>
+                                        {% else %}
+                                        <option value="B+">B+</option>
+                                        {% endif %}
+
+                                        {% if  session["kanGrubu"] == "B-"%}
+                                        <option value="B-" selected>B-</option>
+                                        {% else %}
+                                        <option value="B-">B-</option>
+                                        {% endif %}
+                                        
+
+                                        {% if  session["kanGrubu"] == "O+"%}
+                                        <option value="O+" selected>O+</option>
+                                        {% else %}
+                                        <option value="O+">O+</option>
+                                        {% endif %}
+
+
+                                        {% if  session["kanGrubu"] == "O-"%}
+                                        <option value="O-" selected>O-</option>
+                                        {% else %}
+                                        <option value="O-">O-</option>
+                                        {% endif %}
+
+                                        {% if  session["kanGrubu"] == "AB+"%}
+                                        <option value="AB+" selected>AB+</option>
+                                        {% else %}
+                                        <option value="AB+">AB+</option>
+                                        {% endif %}
+
+                                        {% if  session["kanGrubu"] == "AB-"%}
+                                        <option value="AB-" selected>AB-</option>
+                                        {% else %}
+                                        <option value="AB-">AB-</option>
+                                        {% endif %}
+
+                                    </select>
+                
+                                </div>
+
+                                <br>
+                
+                                
+                
+                                <div class="dogumTarihi block w-50">
+                
+                                    <label for="dogumTarihi">Doğum Tarihi:</label>
+                                    <input type="date" id="dogumTarihi" name="dogumTarihi" class="form-control" value="{{session["dogumTarihi"]}}">
+                                </div>
+
+                                <br>
+                
+                                <button type="submit" class="btn btn-danger mt-4" name="submit_button" value="Kisisel">Güncelle</button>
+                            </form>
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+    </div>
+
+    {% endblock body %}
+
+
+    {% block script %}
+    <script>
+
+        
+
+
+    </script>
+    {% endblock script %}

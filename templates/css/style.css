@@ -1,0 +1,102 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto|Sriracha&display=swap");
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+
+
+}
+body{
+        
+}
+
+.bg {
+    background-image: url(img/bg2.jpg);
+    background-size: cover;
+    height: 96vh;
+    background-position: top;
+
+
+}
+
+.jumbotron {
+    padding: 5px;
+
+}
+
+.gre:hover {
+
+    background-color: green;
+}
+
+.serackerhiz {
+    width: 250px;
+
+}
+
+.profil {
+    display: flex;
+    margin-top: 25px;
+    font-family: "Roboto", arial, sans-serif;
+    color: #222;
+
+
+}
+
+#login-container {
+    height: 230px;
+    width: 400px;
+    padding: 20px;
+    border-radius: 5px;
+    background: #fffffb;
+    position: relative;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+#login-container .profile-img {
+    height: 100px;
+    width: 100px;
+    background: url(img/user_2.png);
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    top: -25px;
+    left: -25px;
+    border-radius: 50%;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+#login-container h1 {
+    font-family: "Sriracha", arial, sans-serif;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #ffc145;
+}
+
+#login-container .description {
+    margin-bottom: 20px;
+}
+
+.bgrow {
+    background-color: red;
+    margin-bottom: 5px;
+}
+
+.ustbar {
+    width: 1850px;
+    margin: 0 auto;
+}
+
+@media screen and (max-width:700px) {
+  
+    .ustbar{
+        width: 460px
+    }
+    
+}
+.registerbg{
+    background-color: #343A40;
+    height: 96vh;
+}

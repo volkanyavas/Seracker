@@ -1,0 +1,120 @@
+{% extends "layout.html" %}
+
+
+<style>
+  {
+    % block css %
+  }
+
+  .form {
+
+    margin-left: auto;
+  }
+
+    {
+    % endblock css %
+  }
+</style>
+
+
+
+
+{% block body %}
+
+<div class="container">
+
+  <form method="POST" enctype="multipart/form-data" class="form">
+    <input type="file" name="file" class="btn btn-danger mt-4">
+    <!-- //<input type="submit" name="asd" class="btn btn-danger mt-4"> -->
+
+    <button type="submit" class="btn btn-dark mt-4" name="submit_button" value="tahlilYukle">Tahlil Yükle</button>
+
+
+  </form>
+
+
+  {% if kayitli_tahliller == 0 %}
+
+  {% else %}
+
+  {% for i in  kayitli_tahliller%}
+
+  
+
+  <div id="accordion">
+
+    <div class="card mt-4 mb-4">
+
+      <div class="card-header">
+        <a href="#collapse{{i}}" class="card-link" data-toggle="collapse">
+          
+          
+          <h3>{{i.replace("\\r"," ")}} Tarihli Tahlil Sonuçları</h3>
+        </a>
+      </div>
+
+      <div id="collapse{{i}}" class="collapse show" style="background: transparent;" data-parent="#accordion">
+
+        <div class="card-body">
+          <div class="form-group">
+
+
+
+            <div>
+
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Tahlil</th>
+                    <th scope="col">Sonuç</th>
+                    <th scope="col">Sonuç Birimi</th>
+                    <th scope="col">Referans</th>
+                  </tr>
+                </thead>
+                <tbody>
+
+
+                  {% for j in tahlilAyrintilari(session["userID"],i) %}
+
+                  <tr>
+                    <th scope="row"></th>
+                    <td>{{j.id}}</td>
+                    <td>{{j.to_dict()["sonuc"]}}</td>
+                    <td>{{j.to_dict()["birim"]}}</td>
+                    <td>{{j.to_dict()["referans"]}}</td>
+                  </tr>
+                  
+                  {% endfor %}
+
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+
+
+        </div>
+
+
+        {% endfor %}
+
+        {% endif %}
+
+
+
+
+
+
+
+      </div>
+
+
+
+
+
+
+
+
+
+      {% endblock body %}

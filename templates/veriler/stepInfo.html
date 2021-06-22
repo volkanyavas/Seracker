@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+
+
+<style>
+  {
+    % block css %
+  }
+
+    {
+    % endblock css %
+  }
+</style>
+
+
+
+
+{% block body %}
+
+
+
+<div class="container" style="background-color: rgba(255, 255, 255, 0.3); padding: 40px; ">
+
+
+
+  {% if adimGunluk_veriler ==0%}
+
+
+  <div class="row">
+    <h4 style="color: #5f0d0d">Adım bilginiz bulunmamaktadır. </h4>
+    <h5>
+      Eğer mobil uygulamamıza sahip değilseniz, aşağıdaki bağlantıdan android için uygulamamızı indirdikten sonra adım
+      bilgilerinizi sistemimizden takip edebilirsiniz.
+    </h4>
+    <div class="col-3">
+
+      <a href="#">
+        <img src="{{imgGetir("mobil_logo.png")}}" alt="" class="" style="width: 220px;">
+      </a>
+
+    </div>
+
+    <div class="col-9">
+      <hr>
+      
+
+      <div class="contentGroup">
+        
+        <div class="rightArea">
+          <h3>Play Store'den Yükle</h3>
+          <p>Google Play Store uygulamsında <a href="/#">seracker.com/indir </a> adresine erişerek de size uygun
+            uygulamayı hızlıca indirebilirsiniz.</p>
+        </div>
+      </div>
+
+      
+
+    </div>
+
+
+
+  </div>
+
+
+
+
+
+  {% else %}
+  <table class="table table-hover table-dark ">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">Tarih</th>
+        <th scope="col"><i class="fas fa-walking"></i> Adım Bilgisi</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in adimGunluk_veriler %}
+
+      <tr>
+        <th scope="row"></th>
+        <td>{{i}}</td>
+        <td>{{adimAyrintilari(session["userID"],i)}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% endif %}
+
+
+</div>
+
+
+{% endblock body %}
